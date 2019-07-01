@@ -1,0 +1,43 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "Roll",
+  "_objFlags": 0,
+  "_rawFiles": null,
+  "_duration": 0.4,
+  "sample": 10,
+  "speed": 0.5,
+  "wrapMode": 1,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "410339ed-b886-4d1b-b024-1e447fc8d63a"
+            }
+          },
+          {
+            "frame": 0.1,
+            "value": {
+              "__uuid__": "c159c58d-10e1-4247-a0ef-4ba41de11c9f"
+            }
+          },
+          {
+            "frame": 0.2,
+            "value": {
+              "__uuid__": "e0fc646f-b77d-42c2-a11e-e1861ce6ab41"
+            }
+          },
+          {
+            "frame": 0.3,
+            "value": {
+              "__uuid__": "410339ed-b886-4d1b-b024-1e447fc8d63a"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}
