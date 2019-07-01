@@ -7,7 +7,7 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
-import {BGMoveDuration} from './Defined';
+import {BGMoveDuration, WoodsMoveDuration} from './Defined';
 cc.Class({
     extends: cc.Component,
 
@@ -40,7 +40,6 @@ cc.Class({
     onLoad () {
         this.jumpHeight = 35; // 跳跃高度
         this.sliceGap = 8; // 人物滑动时与地面的间距
-        this.bgImgMoveDuration = BGMoveDuration; //背景移动速度
         this.hero = this.baseView.getChildByName("Hero");
         this.heroAnim = this.hero.getComponent(cc.Animation);
         this.sliceBtn = this.baseView.getChildByName('ButtonSlice');
@@ -50,7 +49,8 @@ cc.Class({
         
         this.run();
 
-        this.moveBgImg()
+        this.moveBgImg1();
+        this.moveBgImg2();
 
         
     },
@@ -61,25 +61,44 @@ cc.Class({
 
     // update (dt) {},
 
-    moveBgImg() {
+    // 移动背景
+    moveBgImg1() {
         var self = this;
-        cc.log('this.BGImg1.width',this.BGImg1.width)
         var moveWidth = this.BGImg1.getChildByName("BGImg1").width;
         var callBack = cc.callFunc(function(){
-            console.log('bgImgMoveOver');
+            // console.log('bgImgMoveOver');
             this.BGImg1.x = 0;
             startMove();
         }.bind(this),this.BGImg1,this);
         
         var startMove = function() {
-            var moveBg = cc.moveBy(self.bgImgMoveDuration,-moveWidth,0);
+            var moveBg = cc.moveBy(BGMoveDuration,-moveWidth,0);
             var seq = cc.sequence(moveBg,callBack);
             self.BGImg1.runAction(seq);
             
         };
         startMove();
+    },
+
+    // 移动树林
+    moveBgImg2() {
+        var self = this;
+        var children = this.BGImg2.children;
+        var moveWidth = children[0].width;
+        var run = function(target, {duration,width}) {
+            console.log('duration',duration)
+            cc.log('width',width);
+            // target.x = -width;
+            var moveBg = cc.moveBy(duration, width,0);
+            var seq = cc.sequence(moveBg, cc.callFunc(run,target,{duration:duration,width:width}));
+            target.runAction(seq);
+        }
         
-        
+        for(var i = 0; i < children.length; i++) {
+            var duration = WoodsMoveDuration+WoodsMoveDuration*i;
+            var width = -moveWidth-moveWidth*i
+            run(children[i],{duration:duration,width:width})
+        }
     },
 
     onTouchEvent_sliceBtn (target) {
