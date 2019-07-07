@@ -82,23 +82,17 @@ cc.Class({
 
     // 移动树林
     moveBgImg2() {
-        var self = this;
-        var children = this.BGImg2.children;
-        var moveWidth = children[0].width;
         var run = function(target, {duration,width}) {
             console.log('duration',duration)
             cc.log('width',width);
-            // target.x = -width;
+            target.x = 1100;
             var moveBg = cc.moveBy(duration, width,0);
             var seq = cc.sequence(moveBg, cc.callFunc(run,target,{duration:duration,width:width}));
             target.runAction(seq);
         }
-        
-        for(var i = 0; i < children.length; i++) {
-            var duration = WoodsMoveDuration+WoodsMoveDuration*i;
-            var width = -moveWidth-moveWidth*i
-            run(children[i],{duration:duration,width:width})
-        }
+        var width = -this.BGImg2.width - cc.view.getVisibleSize().width;
+        // var width = this.BGImg2.width + cc.winSize;
+        run(this.BGImg2,{duration:WoodsMoveDuration,width:width})
     },
 
     onTouchEvent_sliceBtn (target) {
